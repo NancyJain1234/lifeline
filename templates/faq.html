@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="faq-container">
+    <h2>Why Donate Blood? <span class="highlight">FAQs</span></h2>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            <h3>Why is donating blood important?</h3>
+            <span class="arrow">➕</span>
+        </div>
+        <div class="faq-answer">
+            <p>Donating blood saves lives. Every donation can help up to three people in need of transfusions due to accidents, surgeries, or medical conditions.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            <h3>Who can donate blood?</h3>
+            <span class="arrow">➕</span>
+        </div>
+        <div class="faq-answer">
+            <p>Generally, healthy adults aged 18–65 with minimum weight 50kg can donate. Specific eligibility is determined by medical guidelines.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            <h3>How often can I donate blood?</h3>
+            <span class="arrow">➕</span>
+        </div>
+        <div class="faq-answer">
+            <p>Whole blood can be donated every 3 months. Platelets and plasma have different intervals. Regular donations help maintain a steady blood supply.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            <h3>Does donating blood hurt?</h3>
+            <span class="arrow">➕</span>
+        </div>
+        <div class="faq-answer">
+            <p>Donating blood is safe and causes minimal discomfort. A small needle prick is used, and most donors experience little to no pain.</p>
+        </div>
+    </div>
+</div>
+
+<style>
+/* FAQ Container */
+.faq-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 25px 20px;
+    background: #fff0f0;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    animation: fadeIn 1s ease forwards;
+    overflow: hidden;
+}
+
+body {
+    background: linear-gradient(135deg, #ffe6e6, #fff0f0);
+}
+
+.faq-container h2 {
+    text-align: center;
+    color: #cc0000;
+    margin-bottom: 30px;
+    animation: fadeUp 1s ease forwards;
+}
+
+.highlight {
+    color: #d9534f;
+}
+
+/* FAQ Item */
+.faq-item {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ffcccc;
+    border-radius: 8px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUp 0.5s forwards;
+}
+
+.faq-item:nth-child(1) { animation-delay: 0.2s; }
+.faq-item:nth-child(2) { animation-delay: 0.4s; }
+.faq-item:nth-child(3) { animation-delay: 0.6s; }
+.faq-item:nth-child(4) { animation-delay: 0.8s; }
+
+/* Question */
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    cursor: pointer;
+    background-color: #ffe6e6;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.faq-question:hover {
+    background-color: #ffd6d6;
+    transform: scale(1.01);
+}
+
+.faq-question h3 {
+    font-size: 18px;
+    margin: 0;
+}
+
+/* Arrow */
+.arrow {
+    font-size: 22px;
+    transition: transform 0.4s ease;
+}
+
+/* Answer */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 20px;
+    background-color: #fff0f0;
+    transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s ease;
+}
+
+.faq-answer p {
+    margin: 15px 0;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+<script>
+document.querySelectorAll('.faq-question').forEach(question => {
+    question.addEventListener('click', () => {
+        const answer = question.nextElementSibling;
+        const arrow = question.querySelector('.arrow');
+
+        if (answer.style.maxHeight) {
+            answer.style.maxHeight = null;
+            answer.style.paddingTop = 0;
+            answer.style.paddingBottom = 0;
+            arrow.style.transform = 'rotate(0deg)';
+            arrow.textContent = '➕';
+        } else {
+            answer.style.maxHeight = answer.scrollHeight + 30 + "px";
+            answer.style.paddingTop = '15px';
+            answer.style.paddingBottom = '15px';
+            arrow.style.transform = 'rotate(45deg)';
+            arrow.textContent = '➖';
+        }
+
+        // Close other open FAQs for accordion effect
+        document.querySelectorAll('.faq-answer').forEach(other => {
+            if (other !== answer) {
+                other.style.maxHeight = null;
+                other.style.paddingTop = 0;
+                other.style.paddingBottom = 0;
+                const otherArrow = other.previousElementSibling.querySelector('.arrow');
+                if(otherArrow) { 
+                    otherArrow.style.transform = 'rotate(0deg)';
+                    otherArrow.textContent = '➕';
+                }
+            }
+        });
+    });
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeLine Connect - Profile</title>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Body */
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffe6e6, #fff0f0);
+            color: #333;
+        }
+
+        /* Header & Navbar */
+        header {
+            background: #d9534f;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px 20px;
+            color: white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        header .logo-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        header img {
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            padding: 3px;
+            margin-right: 12px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            margin: 0;
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: 0.3s;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            background: white;
+            color: #d9534f;
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        /* Headings */
+        h2 {
+            text-align: center;
+            color: #d9534f;
+            margin-bottom: 25px;
+        }
+
+        /* Flash messages */
+        .flash-messages {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .alert {
+            display: inline-block;
+            padding: 12px 20px;
+            margin: 5px 0;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+        }
+
+        .alert-success { background-color: #28a745; }
+        .alert-danger { background-color: #dc3545; }
+        .alert-info { background-color: #17a2b8; }
+        .alert-warning { background-color: #ffc107; color: #333; }
+
+        /* Profile Section */
+        .profile-section {
+            margin-bottom: 35px;
+            padding: 25px;
+            border-radius: 12px;
+            background: #fafafa;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #d9534f;
+            display: block;
+            margin: 0 auto 15px auto;
+        }
+
+        .profile-section form {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+            color: #555;
+            text-align: left;
+        }
+
+        input[type="text"], 
+        input[type="email"],
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #d9534f;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #b52b2b;
+        }
+
+        /* Requests */
+        .requests-list {
+            display: grid;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .request-card {
+            background: #fff3f3;
+            padding: 15px 20px;
+            border-radius: 12px;
+            border-left: 5px solid #d9534f;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            text-align: left;
+        }
+
+        .request-card h4 {
+            margin: 0 0 8px 0;
+            color: #d9534f;
+        }
+
+        .request-card p {
+            margin: 4px 0;
+            color: #555;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 768px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+            nav {
+                flex-direction: column;
+                gap: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='logo.jpg') }}" alt="LifeLine Logo">
+            <h1>LifeLine Connect</h1>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/find">Find Donor</a>
+            <a href="/profile">Profile</a>
+            <a href="/about">About</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>My Profile</h2>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="flash-messages">
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <!-- Profile Photo & Name -->
+        <div class="profile-section">
+            <h2>{{ user.name }}</h2>
+            {% if user.photo %}
+                <img src="{{ url_for('photo', user_id=user._id) }}" alt="Profile Photo" class="profile-photo">
+            {% else %}
+                <p>No photo uploaded.</p>
+            {% endif %}
+            <form action="{{ url_for('upload_photo') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="photo" accept="image/*" required>
+                <button type="submit">Upload Photo</button>
+            </form>
+        </div>
+
+        <!-- Personal Information -->
+        <div class="profile-section">
+            <h2>Personal Information</h2>
+            <form action="{{ url_for('update_profile') }}" method="post">
+                <label>Full Name:</label>
+                <input type="text" name="name" value="{{ user.name or '' }}">
+
+                <label>Email:</label>
+                <input type="email" name="email" value="{{ user.email or '' }}">
+
+                <label>Phone:</label>
+                <input type="text" name="phone" value="{{ user.phone or '' }}">
+
+                <label>Blood Group:</label>
+                <input type="text" name="blood_group" value="{{ user.blood_group or '' }}">
+
+                <label>Address:</label>
+                <textarea name="address">{{ user.address or '' }}</textarea>
+
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+
+        <!-- Donor Status -->
+        <div class="profile-section">
+            <h2>Donor Status</h2>
+            {% if not user.is_disabled %}
+                <p>Your profile is <b>Active</b>. You are visible as a donor.</p>
+                <form action="{{ url_for('disable_profile') }}" method="post">
+                    <button type="submit">Disable Profile</button>
+                </form>
+            {% else %}
+                <p>Your profile is <b>Disabled</b>. You are not visible as a donor.</p>
+                <form action="{{ url_for('enable_profile') }}" method="post">
+                    <button type="submit">Enable Profile</button>
+                </form>
+            {% endif %}
+        </div>
+
+        <!-- Requests Received -->
+        <div class="profile-section">
+            <h2>Requests Received</h2>
+            {% if requests %}
+                <div class="requests-list">
+                    {% for req in requests %}
+                        <div class="request-card">
+                            <h4>{{ req.from_user_name }}</h4>
+                            <p>Email: {{ req.email or 'N/A' }} | Phone: {{ req.phone or 'N/A' }}</p>
+                            <p>Message: {{ req.message }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No requests received yet.</p>
+            {% endif %}
+        </div>
+
+    </div>
+</body>
+</html>

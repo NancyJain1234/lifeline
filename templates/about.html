@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="about-container">
+    <h2 class="about-title">About <span class="highlight">LifeLine Connect</span></h2>
+
+    <p class="about-text">
+        Every second counts when someone's life is at stake. At <strong>LifeLine Connect</strong>, we are more than just a platform — we are a community built on compassion and hope.
+    </p>
+
+    <p class="about-text">
+        Our mission is simple yet powerful: to bridge the gap between those who are willing to donate and those in urgent need of blood. With a quick, reliable, and user-friendly system, we make it easier than ever to save lives.
+    </p>
+
+    <p class="about-text">
+        Whether you’re a donor ready to make a difference or someone searching for hope — <strong>LifeLine Connect</strong> is here for you.
+    </p>
+
+    <h3 class="about-subtitle">Why Choose Us?</h3>
+    <div class="cards-container">
+        <div class="card">
+            <div class="card-icon">📝</div>
+            <p>Quick and easy donor registration</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">🔍</div>
+            <p>Search for blood donors based on location and blood group</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">✅</div>
+            <p>Verified donor information for reliability</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">🌐</div>
+            <p>A growing network of lifesavers across the community</p>
+        </div>
+    </div>
+
+    <p class="about-cta">
+        Together, let’s make every drop count. 💉❤
+    </p>
+</div>
+
+<style>
+.about-container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 40px 35px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+}
+
+body {
+    background: linear-gradient(135deg, #ffe6e6, #fff0f0);
+}
+
+.about-title {
+    font-size: 36px;
+    color: #d9534f;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.highlight {
+    color: #ff4d4d;
+}
+
+.about-text {
+    font-size: 18px;
+    line-height: 1.7;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.about-subtitle {
+    color: #d9534f;
+    font-size: 28px;
+    margin: 35px 0 20px 0;
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.card {
+    background-color: #ffe6e6;
+    padding: 20px 25px;
+    border-radius: 12px;
+    flex: 1 1 200px;
+    max-width: 220px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+.card-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.card p {
+    font-size: 16px;
+    color: #555;
+    font-weight: 500;
+}
+
+.about-cta {
+    font-size: 22px;
+    font-weight: 600;
+    color: #d9534f;
+    margin-top: 40px;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .cards-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+</style>
+{% endblock %}
